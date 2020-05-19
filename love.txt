@@ -1,0 +1,162 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
+#include <math.h>
+
+int Leap(int year)//判断是否闰年，是返回1，不是返回0;
+{
+    if((year%100!=0)&&(year%4==0)||(year%400==0))
+    {
+        return(1);
+    }
+    else
+    {
+        return(0);
+    }
+}
+int DateOfYear(int year,int month,int day)//输入年月日，计算该日是该年的第几天;
+{
+    int EveryYear[12]={31,28,31,30,31,30,31,31,30,31,30,31};
+    int sum=0,i;
+    if(Leap(year))
+    {
+        EveryYear[1]++;
+    }
+    for(i=1;i<month;i++)
+    {
+        sum=sum+EveryYear[i-1];
+    }
+    sum=sum+day;
+    return(sum);
+}
+int CountYear(long date)//从输入格式中得出年的数值;
+{
+    int n=0;
+    date=(date-date%10000)/10000;
+    n=(int)date;
+    return(n);
+}
+int CountMonth(long date)//从输入格式中得出月的数值;
+{
+    int m=0;
+    date=date%10000;
+    date=(date-date%100)/100;
+    m=(int)date;
+    return(m);
+}
+int CountDay(long date)//从输入格式中得出日的数值;
+{
+    int d=0;
+    date=date%100;
+    d=(int)date;
+    return(d);
+}
+
+void sleep(int s)
+{
+    time_t tmp1=time(NULL);
+    time_t tmp2=tmp1;
+    while(difftime(tmp2,tmp1)<s)//延时s秒后结束 
+    {
+        tmp2=time(NULL);
+    }   
+} 
+
+int main()
+{
+    long date1=0,date2=0,t=0;
+    int year1=0,year2=0,month1=0,month2=0,day1=0,day2=0,lastnum=0, choice;
+    int i;
+    float y, x, z;
+    printf("******  hi~ 你好 我是你男朋友编写出来的程序   ******\n");
+    sleep(2);
+    printf("******             我们能聊聊吗？             ******\n\n");
+    sleep(2);
+    loop:printf("********************* 选项 *************************\n");
+    printf("******        1 继续聊天        2 不感兴趣    ******\n");
+    printf("******         （输入数字  回车即可）         ******\n");
+    printf("****************************************************\n");
+    scanf("%d", &choice);
+    if(choice == 2)
+    {
+        printf("再好好想想吧！\n");
+        goto loop;
+    }
+    //\n\n还记得我们在一起的那天吗？\n请在下面输入年月日^_^（格式如20120209）\n");//按此格式输入，可以省去分别比较年、月、日的开销;
+    printf("****** 电脑前面这位美女   有个问题我比较好奇  ******\n");
+    sleep(1);
+    printf("******        你们是什么时候在一起的呢        ******\n");
+    sleep(2);
+    printf("******        （输入格式如  19960124）        ******\n");      
+    while((scanf("%ld",&date1)) && date1!=20180316)
+    {
+    printf("******    和你男朋友说的不一样诶  再想想？    ******\n");
+    }   
+    time_t nowtime = time(NULL);
+    tm *now = localtime(&nowtime);
+    date2 = (now->tm_year+1900)*10000 + (now->tm_mon+1)*100 + (now->tm_mday);
+    if(date1>date2)//为计算方便，始终将大数放在date2中;
+    {
+        t=date1;
+        date1=date2;
+        date2=t;
+    }
+    year1=CountYear(date1);
+    month1=CountMonth(date1);
+    day1=CountDay(date1);
+    year2=CountYear(date2);
+    month2=CountMonth(date2);
+    day2=CountDay(date2);
+    for(i=year1;i<year2;i++)
+    {
+        if(Leap(i))
+        {
+            lastnum++;
+        }
+    }
+    lastnum=lastnum+365*(year2-year1)-DateOfYear(year1,month1,day1)+DateOfYear(year2,month2,day2);
+    printf("******          你们已经在一起%4d天了        ******\n", lastnum);
+    sleep(2);
+    printf("******                好羡慕哦                ******\n\n");
+    sleep(2);
+
+
+    // 画心形  
+    for (float y = 1.5f; y > -1.5f; y -= 0.1f) {
+        for (float x = -1.5f; x < 1.5f; x += 0.05f) {
+            float a = x * x + y * y - 1;
+            putchar(a * a * a - x * x * y * y * y <= 0.0f ? '*' : ' ');
+        }
+        putchar('\n');
+    }
+
+    sleep(3);
+
+    printf("******          ta还有 一些话让我转达         ******\n\n");
+    sleep(2);
+    printf("****************************************************\n");
+    sleep(2);
+    printf("******          媳妇 谢谢你耐心的守候         ******\n");
+    sleep(2);
+    printf("******              我不怎么会表达            ******\n");
+    sleep(2);
+    printf("******      我会努力让你相信你的选择没错      ******\n");
+    sleep(2);
+    printf("******         还有一句一直想说没说的话       ******\n");
+    sleep(2);
+    
+    for (double y = 2.5; y >= -1.6; y = y - 0.2)  
+	{  
+		for (double x = -3; x <= 4.8; x = x + 0.1)  
+		{   (pow((x*x + y*y - 1), 3) <= 3.6*x*x*y*y*y   
+			|| (x>-2.4 && x<-2.1 && y<1.5 && y>-1)   
+			|| (((x<2.5 && x>2.2) 
+			|| (x>3.4 && x<3.7)) && y>-1 && y<1.5)   
+			|| (y>-1 && y<-0.6 && x<3.7 && x>2.2)) ? printf("*") : printf(" ");  
+		}     
+		printf("\n");  
+	} 
+    
+    system("pause");
+    return(0);
+}
